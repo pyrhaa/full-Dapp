@@ -6,7 +6,7 @@ import './App.css';
 const greeterAddress = '0x5FbDB2315678afecb367f032d93F642f64180aa3';
 
 const App = () => {
-  const [greeting, setGreetingValue] = useState();
+  const [greeting, setGreetingValue] = useState('');
 
   const reqAccount = async () => {
     await window.ethereum.request({ method: 'eth_reqestAccounts' });
@@ -41,6 +41,7 @@ const App = () => {
           signer
         );
         const transaction = await contract.setGreeting(greeting);
+        setGreeting('');
         await transaction.wait();
         fetchGreeting();
       }
@@ -53,8 +54,10 @@ const App = () => {
         <button onClick={fetchGreeting}>Fetch Greeting</button>
         <button onClick={setGreeting}>Set Greeting</button>
         <input
+          type={'text'}
           onChange={(e) => setGreetingValue(e.target.value)}
           placeholder="Set greeting"
+          value={greeting}
         />
       </header>
     </div>
