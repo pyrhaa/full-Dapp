@@ -9,7 +9,7 @@ const App = () => {
   const [greeting, setGreetingValue] = useState('');
 
   const reqAccount = async () => {
-    await window.ethereum.request({ method: 'eth_reqestAccounts' });
+    await window.ethereum.request({ method: 'eth_requestAccounts' });
   };
 
   const fetchGreeting = async () => {
@@ -30,21 +30,17 @@ const App = () => {
   };
 
   const setGreeting = async () => {
-    if (!greeting) {
-      if (typeof window.ethereum !== 'undefined') {
-        await reqAccount();
-        const provider = new ethers.providers.Web3Provider(window.ethereum);
-        const signer = provider.getSigner();
-        const contract = new ethers.Contract(
-          greeterAddress,
-          Greeter.abi,
-          signer
-        );
-        const transaction = await contract.setGreeting(greeting);
-        setGreeting('');
-        await transaction.wait();
-        fetchGreeting();
-      }
+    if (!greeting) return;
+    if (typeof window.ethereum !== 'undefined') {
+      await reqAccount();
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      console.log({ provider });
+      const signer = provider.getSigner();
+      const contract = new ethers.Contract(greeterAddress, Greeter.abi, signer);
+      const transaction = await contract.setGreeting(greeting);
+      setGreeting('');
+      await transaction.wait();
+      fetchGreeting();
     }
   };
 
