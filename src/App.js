@@ -12,6 +12,7 @@ const App = () => {
     await window.ethereum.request({ method: 'eth_requestAccounts' });
   };
 
+  ///window.ethereum verify that metamask is active in navigator
   const fetchGreeting = async () => {
     if (typeof window.ethereum !== 'undefined') {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
