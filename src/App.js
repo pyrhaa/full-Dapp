@@ -9,9 +9,23 @@ const tokenAddress = '0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512';
 
 const App = () => {
   const [greeting, setGreetingValue] = useState('');
+  const [userAccount, setUserAccount] = useState('');
+  const [amount, setAmount] = useState(0);
 
   const reqAccount = async () => {
     await window.ethereum.request({ method: 'eth_requestAccounts' });
+  };
+
+  const getBalance = async () => {
+    if (typeof window.ethereum !== 'undefined') {
+      const [account] = await window.ethereum.request({
+        method: 'eth_requestAccounts'
+      });
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const contract = new ethers.Contract(tokenAddress, Token.abi, provider);
+      const balance = await contract.balanceOf(account);
+      console.log('Balance: ', balance.toString());
+    }
   };
 
   ///window.ethereum verify that metamask is active in navigator
