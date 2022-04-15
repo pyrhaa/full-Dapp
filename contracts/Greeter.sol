@@ -1,6 +1,6 @@
 //SPDX-License-Identifier: Unlicense
 pragma solidity ^0.8.4;
-///14min12
+
 import "hardhat/console.sol";
 
 contract Greeter {
