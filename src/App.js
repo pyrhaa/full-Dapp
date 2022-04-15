@@ -28,6 +28,18 @@ const App = () => {
     }
   };
 
+  const sendCoins = async () => {
+    if (typeof window.ethereum !== 'undefined') {
+      await reqAccount();
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const signer = provider.getSigner();
+      const contract = new ethers.Contract(tokenAddress, Token.abi, signer);
+      const transaction = await contract.transfer(userAccount, amount);
+      await transaction.wait();
+      console.log(`${amount} Coins successfully sent to ${userAccount}`);
+    }
+  };
+
   ///window.ethereum verify that metamask is active in navigator
   const fetchGreeting = async () => {
     if (typeof window.ethereum !== 'undefined') {
