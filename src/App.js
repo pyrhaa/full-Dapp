@@ -84,6 +84,18 @@ const App = () => {
           placeholder="Set greeting"
           value={greeting}
         />
+
+        <br />
+        <button onClick={getBalance}>Get Balance</button>
+        <button onClick={sendCoins}>Send Coins</button>
+        <input
+          onChange={(e) => setUserAccount(e.target.value)}
+          placeholder="Account ID"
+        />
+        <input
+          onChange={(e) => setAmount(e.target.value)}
+          placeholder="Amount"
+        />
       </header>
     </div>
   );
